@@ -45,15 +45,14 @@ const Authentication = {
         }
     },
     Cart: async (req, res) => {
-        const { id, name, price, oldPrice, quantity } = req.body;
+        const { id, name, price, oldPrice } = req.body;
         console.log('Data nhan dc', id, name, price, oldPrice);
         try {
             const product = await new Product({
-                _id: id,
+                id: id,
                 name: name,
                 price: price,
                 oldPrice: oldPrice,
-                quantity: quantity,
             });
             const SaveProduct = await product.save();
             res.status(200).json(SaveProduct);
@@ -83,7 +82,7 @@ const Authentication = {
         console.log('Check ID backend', id);
         console.log(typeof id);
         try {
-            await Product.findByIdAndDelete(id);
+            await Product.findOneAndDelete(id);
 
             res.status(200).json('Xoa data thanh cong');
         } catch (err) {
