@@ -7,6 +7,7 @@ dotenv.config();
 const Authentication = {
     register: async (req, res) => {
         const { username, password, email } = req.body;
+
         console.log('Check Backend ', username, password, email);
         try {
             const salt = await bcrypt.genSalt(10);
@@ -23,25 +24,30 @@ const Authentication = {
         }
     },
     login: async (req, res) => {
+        const KeyAcessToken = process.env.JWT_KEY_ACCESS_TOKEN;
+        console.log('Check Accestoken', KeyAcessToken);
         const { username, password } = req.body;
-        console.log('Check data backend login ', username, password);
+        console.log('Check Login ', username, password);
         try {
-            const Users = await User.findOne({ username });
+            const Users = await User.findOne({ username: username });
             if (!Users) {
-                return res.status(404).json('Wrong user');
+                res.status(404).json('Wrong user');
             }
             const passwordCheck = await bcrypt.compare(password, Users.password);
             if (!passwordCheck) {
                 return res.status(404).json('Wrong password');
             }
             if (Users && passwordCheck) {
-                const token = jwt.sign({ Users: Users }, 'your_jwt_secret', {
+                const Accesstoken = jwt.sign({ Users: Users }, 'KeyAcessToken', {
                     expiresIn: '1h',
                 });
-                return res.json({ token });
+                const Refreshtoken = jwt.sign({ Users: Users }, KeyAcessToken, {
+                    expiresIn: '365d',
+                });
+                return res.status(200).json({ Accesstoken, Refreshtoken });
             }
         } catch (err) {
-            res.status(500).json('Ket noi bi loi roi !!');
+            res.status(500).json('Ket noi bi loi s roi !!');
         }
     },
     Cart: async (req, res) => {
@@ -63,7 +69,6 @@ const Authentication = {
     ProductCart: async (req, res) => {
         try {
             const products = await Product.find();
-            console.log('Check data truocs khi gui ve ', products);
             res.json(products);
         } catch (err) {
             res.status(500).json(err);
