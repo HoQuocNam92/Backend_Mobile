@@ -25,7 +25,6 @@ const Authentication = {
     },
     login: async (req, res) => {
         const KeyAcessToken = process.env.JWT_KEY_ACCESS_TOKEN;
-        console.log('Check Accestoken', KeyAcessToken);
         const { username, password } = req.body;
         console.log('Check Login ', username, password);
         try {
@@ -38,7 +37,7 @@ const Authentication = {
                 return res.status(404).json('Wrong password');
             }
             if (Users && passwordCheck) {
-                const Accesstoken = jwt.sign({ Users: Users }, 'KeyAcessToken', {
+                const Accesstoken = jwt.sign({ Users: Users }, KeyAcessToken, {
                     expiresIn: '1h',
                 });
                 const Refreshtoken = jwt.sign({ Users: Users }, KeyAcessToken, {
