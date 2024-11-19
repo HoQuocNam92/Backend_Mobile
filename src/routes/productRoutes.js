@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const Authentication = require('../Controllers/Controller');
-const Middleware = require('../Controllers/Middleware');
+const Authentication = require('../controllers/productController');
+const Middleware = require('../middlewares/authMiddleware');
 router.post('/api/routes/register', Authentication.register);
 router.post('/api/routes/login', Authentication.login);
-router.get('/api/routes/Productcart', Middleware.verifyToken, Authentication.ProductCart);
+router.get('/api/routes/Productcart', Middleware.verifyToken, Authentication.getUsers);
 router.delete('/api/routes/delete/:id', Authentication.removeCart);
 router.post('/api/routes/cart', Authentication.Cart);
 module.exports = router;
