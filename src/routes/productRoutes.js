@@ -4,7 +4,7 @@ const Authentication = require('../controllers/productController');
 const Middleware = require('../middlewares/authMiddleware');
 router.post('/api/routes/register', Authentication.register);
 router.post('/api/routes/login', Authentication.login);
-router.get('/api/routes/Productcart', Middleware.verifyToken, Authentication.getUsers);
 router.delete('/api/routes/delete/:id', Authentication.removeCart);
 router.post('/api/routes/cart', Authentication.Cart);
+router.get('/api/routes/admin', Middleware.verifyAuthor, Authentication.getUsers);
 module.exports = router;

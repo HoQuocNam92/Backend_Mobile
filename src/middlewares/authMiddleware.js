@@ -18,5 +18,14 @@ const Middleware = {
             res.status(401).json('You are not Authenticated');
         }
     },
+    verifyAuthor: (req, res, next) => {
+        Middleware.verifyToken(req, res, () => {
+            if (req.Users.role === 'admin') {
+                next();
+            } else {
+                res.status(403).json('You are not Authorized to access this route');
+            }
+        });
+    },
 };
 module.exports = Middleware;
