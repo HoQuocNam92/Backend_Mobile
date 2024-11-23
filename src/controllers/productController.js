@@ -1,4 +1,3 @@
-const User = require('../models/User');
 const Product = require('../models/Product');
 const userService = require('../services/userService');
 const registerService = require('../services/RegisterService');
@@ -6,20 +5,29 @@ const loginService = require('../services/loginService');
 require('dotenv').config();
 const Authentication = {
     register: async (req, res) => {
+        const { username, password, email } = req.body;
+        console.log('Check ', username, password, email);
         try {
-            const Savenew = await registerService.register;
+            const Savenew = await registerService({ username, password, email });
             return res.status(200).json(Savenew);
         } catch (err) {
-            return res.status(500).json(err);
+            res.status(500).json({ message: 'Dang ky that bai' });
         }
     },
+    ResetToken: async (req, res) => {},
     login: async (req, res) => {
+        const { username, password } = req.body;
+
         try {
-            const Accesstoken = await loginService.login.Accesstoken;
-            const Refreshtoken = await loginService.login.Refreshtoken;
-            return res.status(200).json({ Accesstoken, Refreshtoken });
+            const { Accesstoken, Refreshtoken } = await loginService({ username, password });
+            res.cookie('Refreshtoken', Refreshtoken, {
+                httpOnly: true,
+                secure: true,
+                sameSite: 'Strict',
+            });
+            return res.status(200).json(Accesstoken);
         } catch (err) {
-            res.status(500).json(err);
+            res.status(500).json({ message: 'Dang nhap that bai' });
         }
     },
     Cart: async (req, res) => {
@@ -60,10 +68,10 @@ const Authentication = {
     },
     getUsers: async (req, res) => {
         try {
-            const users = await userService.getAllUsers;
+            const users = await userService();
             res.json(users);
         } catch (err) {
-            res.status(500).json(err);
+            res.status(500).json({ message: 'Het cach roi' });
         }
     },
 };

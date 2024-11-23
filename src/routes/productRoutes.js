@@ -6,5 +6,5 @@ router.post('/api/routes/register', Authentication.register);
 router.post('/api/routes/login', Authentication.login);
 router.delete('/api/routes/delete/:id', Authentication.removeCart);
 router.post('/api/routes/cart', Authentication.Cart);
-router.get('/api/routes/admin', Middleware.verifyAuthor, Authentication.getUsers);
+router.get('/api/routes/admin', Middleware.verifyToken, Authentication.getUsers);
 module.exports = router;

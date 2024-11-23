@@ -1,10 +1,10 @@
 {
     "name": "backend",
     "version": "1.0.0",
-    "main": "src/app.js",
+    "main": "src/server.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "nodemon server.js",
+        "test": "nodemon --verbose server.js",
+        "start": "nodemon src/server.js",
         "build": "react-scripts build",
         "predeploy": "npm run build",
         "deploy": "gh-pages -d build"
@@ -16,6 +16,8 @@
         "axios": "^1.7.7",
         "bcrypt": "^5.1.1",
         "body-parser": "^1.20.3",
+        "cookie": "^1.0.2",
+        "cookie-parser": "^1.4.7",
         "cors": "^2.8.5",
         "dotenv": "^16.4.5",
         "ejs": "^3.1.10",

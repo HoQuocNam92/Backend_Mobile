@@ -1,6 +1,7 @@
+const User = require('../models/User');
 const bcrypt = require('bcrypt');
-const register = async (req, res) => {
-    const { username, password, email } = req.body;
+const register = async ({ username, password, email }) => {
+    console.log('Thông tin nhận được từ controller:', { username, password, email });
     try {
         const salt = await bcrypt.genSalt(10);
         const hashed = await bcrypt.hash(password, salt);
@@ -10,9 +11,9 @@ const register = async (req, res) => {
             password: hashed,
         });
         const Savenew = await user.save();
-        return res.status(200).json(Savenew);
+        return Savenew;
     } catch (err) {
-        return res.status(500).json(err);
+        throw new Error('Đã xảy ra lỗi khi đăng ký: ' + err.message);
     }
 };
-module.exports = { register };
+module.exports = register;

@@ -1,7 +1,6 @@
-const User = require('../models/User');
-
+const Product = require('../models/Product');
 const getAllUsers = async () => {
-    return await User.find();
+    return await Product.find();
 };
 
-module.exports = { getAllUsers };
+module.exports = getAllUsers;

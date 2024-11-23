@@ -11,11 +11,7 @@ const DataSchema = new mongoose.Schema({
     password: {
         type: String,
         require: true,
-    }
-
-
-},
-    { timestamps: true }
-)
-const ModelsData = mongoose.model("userProducts", DataSchema);
+    },
+});
+const ModelsData = mongoose.model('userProducts', DataSchema);
 module.exports = ModelsData;
