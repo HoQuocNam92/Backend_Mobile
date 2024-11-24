@@ -11,7 +11,7 @@ const Authentication = {
             const Savenew = await registerService({ username, password, email });
             return res.status(200).json(Savenew);
         } catch (err) {
-            res.status(500).json({ message: 'Dang ky that bai' });
+            res.status(500).json(err);
         }
     },
     ResetToken: async (req, res) => {},
@@ -32,7 +32,6 @@ const Authentication = {
     },
     Cart: async (req, res) => {
         const { id, name, price, oldPrice } = req.body;
-        console.log('Data nhan dc', id, name, price, oldPrice);
         try {
             const product = await new Product({
                 id: id,
@@ -46,6 +45,14 @@ const Authentication = {
             res.status(500).json(err);
         }
     },
+    CartItem: async (req, res) => {
+        try {
+            const product = await Product.find();
+            return res.status(200).json(product);
+        } catch (err) {
+            return res.status(500).json(err);
+        }
+    },
     loginDelete: async (req, res) => {
         try {
             const User = await user.findById(req.params.id);
@@ -56,12 +63,9 @@ const Authentication = {
     },
     removeCart: async (req, res) => {
         const id = req.params.id;
-        console.log('Check ID backend', id);
-        console.log(typeof id);
         try {
-            await Product.findOneAndDelete(id);
-
-            res.status(200).json('Xoa data thanh cong');
+            const responve = await Product.findOneAndDelete(id);
+            res.status(200).json(responve);
         } catch (err) {
             res.status(500).json(err);
         }
