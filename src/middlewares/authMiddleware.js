@@ -10,6 +10,7 @@ const Middleware = {
                 if (err) {
                     res.status(403).json('Token not Valid', err);
                 }
+                console.log('Check Uers ', Users);
                 req.Users = Users;
                 next();
             });
@@ -19,7 +20,7 @@ const Middleware = {
     },
     verifyAuthor: (req, res, next) => {
         Middleware.verifyToken(req, res, () => {
-            if (req.Users.role === 'admin') {
+            if (req.Users.Users.admin === 'admin') {
                 next();
             } else {
                 res.status(403).json('You are not Authorized to access this route');

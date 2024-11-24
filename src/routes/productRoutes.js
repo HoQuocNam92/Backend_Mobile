@@ -7,5 +7,5 @@ router.post('/api/routes/login', Authentication.login);
 router.delete('/api/routes/delete/:id', Middleware.verifyToken, Authentication.removeCart);
 router.post('/api/routes/cart', Authentication.Cart);
 router.get('/api/routes/cartItems', Middleware.verifyToken, Authentication.CartItem);
-router.get('/api/routes/admin', Middleware.verifyToken, Authentication.getUsers);
+router.get('/api/routes/dashboard', Middleware.verifyAuthor, Authentication.getUsers);
 module.exports = router;

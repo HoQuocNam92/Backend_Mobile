@@ -12,6 +12,11 @@ const DataSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
+    admin: {
+        type: String,
+        require: true,
+        default: 'user',
+    },
 });
 const ModelsData = mongoose.model('userProducts', DataSchema);
 module.exports = ModelsData;

@@ -14,7 +14,6 @@ const Authentication = {
             res.status(500).json(err);
         }
     },
-    ResetToken: async (req, res) => {},
     login: async (req, res) => {
         const { username, password } = req.body;
 
@@ -25,7 +24,7 @@ const Authentication = {
                 secure: true,
                 sameSite: 'Strict',
             });
-            return res.status(200).json(Accesstoken);
+            return res.json(Accesstoken);
         } catch (err) {
             res.status(500).json({ message: 'Dang nhap that bai' });
         }
@@ -72,7 +71,7 @@ const Authentication = {
     },
     getUsers: async (req, res) => {
         try {
-            const users = await userService();
+            const users = await Product.find();
             res.json(users);
         } catch (err) {
             res.status(500).json({ message: 'Het cach roi' });
