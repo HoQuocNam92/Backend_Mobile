@@ -18,5 +18,5 @@ const DataSchema = new mongoose.Schema({
         default: 'user',
     },
 });
-const ModelsData = mongoose.model('userProducts', DataSchema);
+const ModelsData = mongoose.model('Users', DataSchema);
 module.exports = ModelsData;
